@@ -1,0 +1,7 @@
+https://github.com/jmorganca/ollama/blob/main/docs/api.md
+
+curl http://localhost:11434/api/generate -d '{
+  "model": "mistral",
+  "prompt": "Why is the sky blue?",
+  "stream": false
+}'

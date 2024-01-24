@@ -1,0 +1,136 @@
+Tried this: https://medium.com/poatek/building-open-source-llm-based-chatbots-using-llama-index-e6de9999ee76
+
+********* Try to run the first time and requires installing transformers
+
+(llamaindexexample) C:\Users\prov\development\ai\coding\AISandbox\llamaindexexample>python main.py
+Traceback (most recent call last):
+  File "C:\Users\prov\pinokio\bin\miniconda\envs\llamaindexexample\lib\site-packages\llama_index\embeddings\huggingface.py", line 65, in __init__
+    from transformers import AutoModel, AutoTokenizer
+ModuleNotFoundError: No module named 'transformers'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\prov\development\ai\coding\AISandbox\llamaindexexample\main.py", line 18, in <module>
+    ServiceContext
+  File "C:\Users\prov\pinokio\bin\miniconda\envs\llamaindexexample\lib\site-packages\llama_index\service_context.py", line 191, in from_defaults
+    embed_model = resolve_embed_model(embed_model)
+  File "C:\Users\prov\pinokio\bin\miniconda\envs\llamaindexexample\lib\site-packages\llama_index\embeddings\utils.py", line 84, in resolve_embed_model
+    embed_model = HuggingFaceEmbedding(
+  File "C:\Users\prov\pinokio\bin\miniconda\envs\llamaindexexample\lib\site-packages\llama_index\embeddings\huggingface.py", line 67, in __init__
+    raise ImportError(
+ImportError: HuggingFaceEmbedding requires transformers to be installed.
+Please install transformers with `pip install transformers`.
+
+**** 
+
+  Downloading transformers-4.36.2-py3-none-any.whl.metadata (126 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 126.8/126.8 kB 746.9 kB/s eta 0:00:00
+Collecting filelock (from transformers)
+  Downloading filelock-3.13.1-py3-none-any.whl.metadata (2.8 kB)
+Collecting huggingface-hub<1.0,>=0.19.3 (from transformers)
+  Downloading huggingface_hub-0.20.2-py3-none-any.whl.metadata (12 kB)
+Requirement already satisfied: numpy>=1.17 in c:\users\prov\pinokio\bin\miniconda\envs\llamaindexexample\lib\site-packages (from transformers) (1.26.3)
+Requirement already satisfied: packaging>=20.0 in c:\users\prov\pinokio\bin\miniconda\envs\llamaindexexample\lib\site-packages (from transformers) (23.2)
+Collecting pyyaml>=5.1 (from transformers)
+  Downloading PyYAML-6.0.1-cp310-cp310-win_amd64.whl.metadata (2.1 kB)
+Requirement already satisfied: regex!=2019.12.17 in c:\users\prov\pinokio\bin\miniconda\envs\llamaindexexample\lib\site-packages (from transformers) (2023.12.25)
+Requirement already satisfied: requests in c:\users\prov\pinokio\bin\miniconda\envs\llamaindexexample\lib\site-packages (from transformers) (2.31.0)
+Collecting tokenizers<0.19,>=0.14 (from transformers)
+  Downloading tokenizers-0.15.0-cp310-none-win_amd64.whl.metadata (6.8 kB)
+Collecting safetensors>=0.3.1 (from transformers)
+  Downloading safetensors-0.4.1-cp310-none-win_amd64.whl.metadata (3.8 kB)
+Requirement already satisfied: tqdm>=4.27 in c:\users\prov\pinokio\bin\miniconda\envs\llamaindexexample\lib\site-packages (from transformers) (4.66.1)
+Requirement already satisfied: fsspec>=2023.5.0 in c:\users\prov\pinokio\bin\miniconda\envs\llamaindexexample\lib\site-packages (from huggingface-hub<1.0,>=0.19.3->transformers) (2023.12.2)
+Requirement already satisfied: typing-extensions>=3.7.4.3 in c:\users\prov\pinokio\bin\miniconda\envs\llamaindexexample\lib\site-packages (from huggingface-hub<1.0,>=0.19.3->transformers) (4.9.0)
+Requirement already satisfied: colorama in c:\users\prov\pinokio\bin\miniconda\envs\llamaindexexample\lib\site-packages (from tqdm>=4.27->transformers) (0.4.6)
+Requirement already satisfied: charset-normalizer<4,>=2 in c:\users\prov\pinokio\bin\miniconda\envs\llamaindexexample\lib\site-packages (from requests->transformers) (3.3.2)
+Requirement already satisfied: idna<4,>=2.5 in c:\users\prov\pinokio\bin\miniconda\envs\llamaindexexample\lib\site-packages (from requests->transformers) (3.6)
+Requirement already satisfied: urllib3<3,>=1.21.1 in c:\users\prov\pinokio\bin\miniconda\envs\llamaindexexample\lib\site-packages (from requests->transformers) (2.1.0)
+Requirement already satisfied: certifi>=2017.4.17 in c:\users\prov\pinokio\bin\miniconda\envs\llamaindexexample\lib\site-packages (from requests->transformers) (2023.11.17)
+Downloading transformers-4.36.2-py3-none-any.whl (8.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 8.2/8.2 MB 8.6 MB/s eta 0:00:00
+Downloading huggingface_hub-0.20.2-py3-none-any.whl (330 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 330.3/330.3 kB 10.3 MB/s eta 0:00:00
+Downloading PyYAML-6.0.1-cp310-cp310-win_amd64.whl (145 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 145.3/145.3 kB 9.0 MB/s eta 0:00:00
+Downloading safetensors-0.4.1-cp310-none-win_amd64.whl (277 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 277.3/277.3 kB 16.7 MB/s eta 0:00:00
+Downloading tokenizers-0.15.0-cp310-none-win_amd64.whl (2.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.2/2.2 MB 10.0 MB/s eta 0:00:00
+Downloading filelock-3.13.1-py3-none-any.whl (11 kB)
+Installing collected packages: safetensors, pyyaml, filelock, huggingface-hub, tokenizers, transformers
+Successfully installed filelock-3.13.1 huggingface-hub-0.20.2 pyyaml-6.0.1 safetensors-0.4.1 tokenizers-0.15.0 transformers-4.36.2
+
+*******
+(llamaindexexample) C:\Users\prov\development\ai\coding\AISandbox\llamaindexexample>python main.py
+None of PyTorch, TensorFlow >= 2.0, or Flax have been found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Traceback (most recent call last):
+  File "C:\Users\prov\pinokio\bin\miniconda\envs\llamaindexexample\lib\site-packages\llama_index\utils.py", line 466, in infer_torch_device
+    has_cuda = torch.cuda.is_available()
+UnboundLocalError: local variable 'torch' referenced before assignment
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\prov\development\ai\coding\AISandbox\llamaindexexample\main.py", line 18, in <module>
+    ServiceContext.from_defaults(
+  File "C:\Users\prov\pinokio\bin\miniconda\envs\llamaindexexample\lib\site-packages\llama_index\service_context.py", line 191, in from_defaults
+    embed_model = resolve_embed_model(embed_model)
+  File "C:\Users\prov\pinokio\bin\miniconda\envs\llamaindexexample\lib\site-packages\llama_index\embeddings\utils.py", line 84, in resolve_embed_model
+    embed_model = HuggingFaceEmbedding(
+  File "C:\Users\prov\pinokio\bin\miniconda\envs\llamaindexexample\lib\site-packages\llama_index\embeddings\huggingface.py", line 72, in __init__
+    self._device = device or infer_torch_device()
+  File "C:\Users\prov\pinokio\bin\miniconda\envs\llamaindexexample\lib\site-packages\llama_index\utils.py", line 468, in infer_torch_device
+    import torch
+ModuleNotFoundError: No module named 'torch'
+
+************
+(llamaindexexample) C:\Users\prov\development\ai\coding\AISandbox\llamaindexexample>pip install torch
+Collecting torch
+  Downloading torch-2.1.2-cp310-cp310-win_amd64.whl.metadata (26 kB)
+Requirement already satisfied: filelock in c:\users\prov\pinokio\bin\miniconda\envs\llamaindexexample\lib\site-packages (from torch) (3.13.1)
+Requirement already satisfied: typing-extensions in c:\users\prov\pinokio\bin\miniconda\envs\llamaindexexample\lib\site-packages (from torch) (4.9.0)
+Collecting sympy (from torch)
+  Downloading sympy-1.12-py3-none-any.whl (5.7 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.7/5.7 MB 7.8 MB/s eta 0:00:00
+Requirement already satisfied: networkx in c:\users\prov\pinokio\bin\miniconda\envs\llamaindexexample\lib\site-packages (from torch) (3.2.1)
+Collecting jinja2 (from torch)
+  Downloading Jinja2-3.1.3-py3-none-any.whl.metadata (3.3 kB)
+Requirement already satisfied: fsspec in c:\users\prov\pinokio\bin\miniconda\envs\llamaindexexample\lib\site-packages (from torch) (2023.12.2)
+Collecting MarkupSafe>=2.0 (from jinja2->torch)
+  Downloading MarkupSafe-2.1.3-cp310-cp310-win_amd64.whl.metadata (3.1 kB)
+Collecting mpmath>=0.19 (from sympy->torch)
+  Downloading mpmath-1.3.0-py3-none-any.whl (536 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 536.2/536.2 kB 17.0 MB/s eta 0:00:00
+Downloading torch-2.1.2-cp310-cp310-win_amd64.whl (192.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 192.3/192.3 MB 7.1 MB/s eta 0:00:00
+Downloading Jinja2-3.1.3-py3-none-any.whl (133 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 133.2/133.2 kB 4.0 MB/s eta 0:00:00
+Downloading MarkupSafe-2.1.3-cp310-cp310-win_amd64.whl (17 kB)
+Installing collected packages: mpmath, sympy, MarkupSafe, jinja2, torch
+Successfully installed MarkupSafe-2.1.3 jinja2-3.1.3 mpmath-1.3.0 sympy-1.12 torch-2.1.2
+
+
+*******************
+(llamaindexexample) C:\Users\prov\development\ai\coding\AISandbox\llamaindexexample>python main.py
+config.json: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 743/743 [00:00<?, ?B/s]
+C:\Users\prov\pinokio\bin\miniconda\envs\llamaindexexample\lib\site-packages\huggingface_hub\file_download.py:149: UserWarning: `huggingface_hub` cache-system uses symlinks by default to efficiently store duplicated files but your machine does not support them in C:\Users\prov\AppData\Local\llama_index\models\models--BAAI--bge-small-en-v1.5. Caching files will still work but in a degraded version that might require more space on your disk. This warning can be disabled by setting the `HF_HUB_DISABLE_SYMLINKS_WARNING` environment variable. For more details, see https://huggingface.co/docs/huggingface_hub/how-to-cache#limitations.
+To support symlinks on Windows, you either need to activate Developer Mode or to run Python as an administrator. In order to see activate developer mode, see this article: https://docs.microsoft.com/en-us/windows/apps/get-started/enable-your-device-for-development
+  warnings.warn(message)
+model.safetensors: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████| 133M/133M [00:14<00:00, 8.97MB/s]
+tokenizer_config.json: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████| 366/366 [00:00<?, ?B/s]
+vocab.txt: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████| 232k/232k [00:00<00:00, 2.31MB/s]
+tokenizer.json: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████| 711k/711k [00:00<00:00, 5.10MB/s]
+special_tokens_map.json: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████| 125/125 [00:00<?, ?B/s]
+ The author grew up working on two main projects outside of school: writing and programming. He wrote short stories, but found them to be poorly plotted with only strong feeling characters. His early programming experiences were with an early version of Fortran on an IBM 1401 computer in his junior high school's basement data processing lab. Despite being enrolled in a PhD program in computer science, the author also took art classes at Harvard and was torn between his love for painting and his enthusiasm for Lisp hacking. He felt stuck in this situation, wanting to graduate from grad school but unsure of how to pursue his artistic dreams. Eventually, an opportunity presented itself when his professor asked if he was far enough along to graduate that June.
+
+
+
+
+
+
+
+
+
+
