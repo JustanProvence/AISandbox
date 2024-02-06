@@ -7,6 +7,7 @@ from llama_index import (
 )
 from llama_index.llms import Ollama
 
+# llm 
 llm = Ollama(model="mistral", request_timeout=30.0)
 
 documents = SimpleDirectoryReader("data").load_data()

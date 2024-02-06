@@ -1,0 +1,1 @@
+python3 -m llama_cpp.server --model ./models/mistral-7b-instruct-v0.2.Q5_K_S.gguf --n_ctx 16192
