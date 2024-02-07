@@ -1,10 +1,67 @@
-from llama_cpp import Llama
-llm = Llama(model_path="./models/mistral/mistral-7b-v0.1.Q5_K_S.gguf")
-output = llm(
-      "Q: Name the planets in the solar system? A: ", # Prompt
-      max_tokens=64, # Generate up to 32 tokens
-      stop=["Q:", "\n"], # Stop generating just before the model would generate a new question
-      echo=True # Echo the prompt back in the output
-) # Generate a completion, can also call create_completion
+from threading import Thread
+from typing import Optional
+from openai import OpenAI
 
-print(output)
+import gradio as gr
+
+client = OpenAI(base_url="http://127.0.0.1:8000/v1/", api_key="Not-a-real-key")
+system_prompt = "You are a helpful AI assistant named Tom.  You must always provide correct, complete, and concise responses to the user's requests.  Once you've answered the user's request, end your feedback.  If the user provides information rather than a question or a command, simply reply with OK."
+
+CSS ="""
+.contain { display: flex; flex-direction: column; }
+.gradio-container { height: 100vh !important; }
+#component-0 { height: 100%; }
+#chatbot { flex-grow: 1; overflow: auto;}
+"""
+
+users = {
+    "Jack": "password",
+    "Jill": "password"
+}
+
+def auth_user(username, password):
+    if username in users and password == users[username]:
+        print(f"Successful login for user {username}")
+        return True
+    else:
+        print(f"Failed login for user {username}")
+        return False
+
+
+with gr.Blocks(css=CSS) as app:
+    chatbot = gr.Chatbot(elem_id="chatbot", scale=1)
+    msg = gr.Textbox()
+    clear = gr.Button("Clear", scale=0)
+
+    def user(user_message, history):
+        return "", history + [[user_message, None]]
+
+    def bot(history):
+        print("\n\nQuestion: ", history[-1][0])
+
+        history_openai_format = []
+        for human, assistant in history:
+              history_openai_format.append({"role": "user", "content": human })
+              history_openai_format.append({"role": "assistant", "content":assistant})
+
+        for human, assistant in history:
+            print('Human: {} Assistant: "{}"'.format(human, assistant))
+
+        stream = client.chat.completions.create(
+           model="mistral",
+           messages=history_openai_format,
+           stream=True,
+        )
+        history[-1][1] = ""
+        for chunk in stream:
+            print(chunk.choices[0].delta.content or "", end="")
+            if chunk.choices[0].delta.content is not None:
+                  history[-1][1] += chunk.choices[0].delta.content
+
+            yield history
+
+    msg.submit(user, [msg, chatbot], [msg, chatbot], queue=False).then(bot, chatbot, chatbot)
+    clear.click(lambda: None, None, chatbot, queue=False)
+
+app.queue()
+app.launch(auth=auth_user)
