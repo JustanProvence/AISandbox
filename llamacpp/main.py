@@ -6,6 +6,7 @@ import gradio as gr
 
 client = OpenAI(base_url="http://127.0.0.1:8000/v1/", api_key="Not-a-real-key")
 system_prompt = "You are a helpful AI assistant named Tom.  You must always provide correct, complete, and concise responses to the user's requests.  Once you've answered the user's request, end your feedback.  If the user provides information rather than a question or a command, simply reply with OK."
+username = ""
 
 CSS ="""
 .contain { display: flex; flex-direction: column; }
@@ -19,6 +20,15 @@ users = {
     "Jill": "password"
 }
 
+def create_greeting(request: gr.Request):
+    return {usermd : gr.Markdown(value=f"# Welcome, {request.username}")}
+
+def updateUser(request : gr.Request):
+    username = request.username
+    usermd = gr.Markdown(value="TEST")
+    print("Username : " + username)
+
+
 def auth_user(username, password):
     if username in users and password == users[username]:
         print(f"Successful login for user {username}")
@@ -29,29 +39,35 @@ def auth_user(username, password):
 
 
 with gr.Blocks(css=CSS) as app:
-    chatbot = gr.Chatbot(elem_id="chatbot", scale=1)
-    msg = gr.Textbox()
-    clear = gr.Button("Clear", scale=0)
+    with gr.Row():
+       usermd = gr.Markdown(value="Not logged in")
+    
+    with gr.Row():
+      with gr.Column(scale=2): 
+         chatbot = gr.Chatbot(elem_id="chatbot", scale=1)
+         clear = gr.Button("Clear Chat History", scale=0)
+      with gr.Column():
+          msg = gr.Textbox()
+          submitBtn = gr.Button("Submit Prompt")
+       
 
     def user(user_message, history):
         return "", history + [[user_message, None]]
 
     def bot(history):
-        print("\n\nQuestion: ", history[-1][0])
+        print("\n\n" + username + " Question: ", history[-1][0])
 
         history_openai_format = []
         for human, assistant in history:
               history_openai_format.append({"role": "user", "content": human })
-              history_openai_format.append({"role": "assistant", "content":assistant})
-
-        for human, assistant in history:
-            print('Human: {} Assistant: "{}"'.format(human, assistant))
+              history_openai_format.append({"role": "assistant", "content": assistant})
 
         stream = client.chat.completions.create(
            model="mistral",
            messages=history_openai_format,
            stream=True,
         )
+
         history[-1][1] = ""
         for chunk in stream:
             print(chunk.choices[0].delta.content or "", end="")
@@ -59,9 +75,13 @@ with gr.Blocks(css=CSS) as app:
                   history[-1][1] += chunk.choices[0].delta.content
 
             yield history
+        
 
     msg.submit(user, [msg, chatbot], [msg, chatbot], queue=False).then(bot, chatbot, chatbot)
+    submitBtn.click(user, [msg, chatbot], [msg, chatbot], queue=False).then(bot, chatbot, chatbot)
     clear.click(lambda: None, None, chatbot, queue=False)
+
+    app.load(create_greeting, inputs=None, outputs=usermd)
 
 app.queue()
 app.launch(auth=auth_user)
